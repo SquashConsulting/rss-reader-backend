@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-
-import Category from 'models/category';
 import { Document } from 'arangojs/lib/cjs/util/types';
 
+import Category from 'models/category';
+import ControllerDecorator from 'decorators/controller';
+
 /* Exports */
-export default { Create };
+export default ControllerDecorator({ Create });
 
 /* Module Functions */
 async function Create(req: Request, res: Response): Promise<void> {
