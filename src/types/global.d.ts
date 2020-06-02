@@ -1,13 +1,33 @@
 import joi from 'joi';
 import { DocumentCollection, EdgeCollection } from 'arangojs';
+import { Request, Response, NextFunction } from 'express';
 
 declare global {
+  type ControllerAction = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void> | void;
+
+  interface ControllerModule {
+    [key: string]: ControllerAction;
+  }
+
   namespace Repo {
     type DateTimestamp = string;
     type CollectionType = 'edge' | 'document';
+    type IndexType =
+      | 'ttl'
+      | 'geo'
+      | 'hash'
+      | 'skiplist'
+      | 'fulltext'
+      | 'persistent';
+    type IndexDefinition = { type: IndexType; fields: string[] };
 
     interface CollectionExport {
       name: string;
+      index?: IndexDefinition;
       schema: joi.ObjectSchema;
       collection: DocumentCollection;
     }

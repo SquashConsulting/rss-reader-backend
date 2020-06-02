@@ -6,6 +6,7 @@ import { DocumentCollection } from 'arangojs';
 /* Constants */
 const name = 'items';
 const collection: DocumentCollection<Repo.Item> = DB.collection(name);
+const index: Repo.IndexDefinition = { type: 'hash', fields: ['guid'] };
 const schema = joi
   .object({
     title: joi.string().required(),
@@ -14,5 +15,11 @@ const schema = joi
   .required();
 
 /* Exports */
-const defaultExport: Repo.CollectionExport = { name, schema, collection };
+const defaultExport: Repo.CollectionExport = {
+  name,
+  index,
+  schema,
+  collection,
+};
+
 export default defaultExport;
