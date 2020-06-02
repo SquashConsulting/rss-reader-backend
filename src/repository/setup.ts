@@ -3,6 +3,8 @@
  * NOTE: This file is not meant to be imported elsewhere in the project.
  */
 
+import { EdgeCollection, DocumentCollection } from 'arangojs';
+
 import DB from './database';
 
 import Edges from 'repository/edges';
@@ -13,9 +15,17 @@ import createCollection, { CreationResult } from './utils/createCollection';
 // Create Document Collections
 Promise.all(
   Collections.map(
-    (collection: Repo.CollectionDefinition): Promise<CreationResult> => {
+    async (collection: Repo.CollectionDefinition): Promise<CreationResult> => {
       console.info(`Creating collection ${collection.name}`);
-      return createCollection(DB, collection.name, collection.type);
+
+      const documentCollection: DocumentCollection = await createCollection(
+        DB,
+        collection.name,
+        'document',
+      );
+
+      if (!collection.index) return documentCollection;
+      return documentCollection.ensureIndex(collection.index);
     },
   ),
 );
@@ -26,10 +36,10 @@ Promise.all(
     async (edge: Repo.EdgeDefinition): Promise<void> => {
       console.info(`Creating edge collection ${edge.name}`);
 
-      const edgeCollection: CreationResult = await createCollection(
+      const edgeCollection: EdgeCollection = await createCollection(
         DB,
         edge.name,
-        edge.type,
+        'edge',
       );
 
       edgeCollection.ensureIndex({
