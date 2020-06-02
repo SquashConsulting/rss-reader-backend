@@ -9,7 +9,7 @@ const collection: DocumentCollection<Repo.Feed> = DB.collection(name);
 const schema = joi
   .object({
     link: joi.string().required(),
-    title: joi.string().required(),
+    title: joi.string().optional(),
   })
   .required();
 

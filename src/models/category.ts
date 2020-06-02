@@ -1,5 +1,3 @@
-import { Document } from 'arangojs/lib/cjs/util/types';
-
 import modelBuilder from './modelBuilder';
 import Category from 'repository/collections/category';
 
