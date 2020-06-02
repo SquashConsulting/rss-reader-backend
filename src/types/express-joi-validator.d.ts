@@ -3,7 +3,9 @@ declare module 'express-joi-validator' {
   import { SchemaLike, ValidationOptions, ValidationResult } from 'joi';
 
   interface Schema {
-    [key: string]: SchemaLike;
+    body?: SchemaLike;
+    query?: SchemaLike;
+    params?: SchemaLike;
   }
 
   type JoiValidator = (
