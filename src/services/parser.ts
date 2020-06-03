@@ -1,3 +1,7 @@
+/**
+ * The Parser service is responsible for RSS Feed parsing.
+ */
+
 import Parser from 'rss-parser';
 
 /* Constants */
