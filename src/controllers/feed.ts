@@ -28,8 +28,13 @@ async function Create(
   const parsedFeed = await Parser.parseURL(feed.link);
   const items: Repo.Item[] = parsedFeed.items as Repo.Item[];
   const feedBody: Repo.Feed = omit(parsedFeed, 'items') as Repo.Feed;
+  const lastItemGuid = items[0]?.guid;
 
-  const savedFeed: Document<Repo.Feed> = await Feed.create(feedBody);
+  const savedFeed: Document<Repo.Feed> = await Feed.create({
+    ...feedBody,
+    lastItemGuid,
+  });
+
   await Item.create(items, savedFeed._id);
 
   res.status(200).send({ items, feed: savedFeed });

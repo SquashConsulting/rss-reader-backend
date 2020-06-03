@@ -16,6 +16,7 @@ declare global {
   namespace Repo {
     type DateTimestamp = string;
     type CollectionType = 'edge' | 'document';
+    type Collection = EdgeCollection | DocumentCollection;
     type IndexType =
       | 'ttl'
       | 'geo'
@@ -24,6 +25,15 @@ declare global {
       | 'fulltext'
       | 'persistent';
     type IndexDefinition = { type: IndexType; fields: string[] };
+
+    interface CollectionMeta {
+      id: string;
+      name: string;
+      status: number;
+      type: number;
+      isSystem: boolean;
+      globallyUniqueId: string;
+    }
 
     interface CollectionExport {
       name: string;

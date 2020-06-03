@@ -1,8 +1,6 @@
 import { Database, DocumentCollection, EdgeCollection } from 'arangojs';
 
 /* Type Definitions */
-export type CreationResult = DocumentCollection | EdgeCollection;
-
 /* Module Exports */
 export default createCollection;
 
@@ -11,24 +9,27 @@ async function createCollection(
   DB: Database,
   name: string,
   type: 'edge',
+  isSystem?: boolean,
 ): Promise<EdgeCollection>;
 async function createCollection(
   DB: Database,
   name: string,
   type: 'document',
+  isSystem?: boolean,
 ): Promise<DocumentCollection>;
 async function createCollection(
   DB: Database,
   name: string,
   type: Repo.CollectionType,
-): Promise<CreationResult> {
+  isSystem: boolean = false,
+): Promise<Repo.Collection> {
   const collection =
     type === 'edge' ? DB.edgeCollection(name) : DB.collection(name);
 
   const collectionExists = await collection.exists();
   if (collectionExists) return collection;
 
-  await collection.create();
+  await collection.create({ isSystem });
 
   return collection;
 }

@@ -4,6 +4,9 @@ declare namespace Repo {
     title: string;
     language: string;
     description: string;
+    lastItemGuid: string;
+
+    /* Relationships */
     items?: Repo.Item[];
   }
 }

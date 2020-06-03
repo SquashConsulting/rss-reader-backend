@@ -5,12 +5,14 @@
   "main": "dist/entry.js",
   "private": true,
   "scripts": {
+    "presetup:repo": "npm run build",
+    "preteardown:repo": "npm run build",
     "build": "tsc -p .",
-    "postbuild": "ef-tspm",
     "start": "npm run build && node dist/entry.js",
     "live": "nodemon -e ts --exec \"npm run start\"",
-    "presetup:repo": "npm run build",
-    "setup:repo": "node dist/repository/setup.js"
+    "setup:repo": "node dist/repository/setup.js",
+    "teardown:repo": "node dist/repository/teardown.js",
+    "postbuild": "ef-tspm"
   },
   "bin": "./dist/entry.js",
   "devDependencies": {

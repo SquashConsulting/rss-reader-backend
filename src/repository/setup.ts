@@ -10,12 +10,17 @@ import DB from './database';
 import Edges from 'repository/edges';
 import Collections from 'repository/collections';
 
-import createCollection, { CreationResult } from './utils/createCollection';
+import createCollection from './utils/createCollection';
+import createMigrations from './utils/createMigrations';
+
+createMigrations();
 
 // Create Document Collections
 Promise.all(
   Collections.map(
-    async (collection: Repo.CollectionDefinition): Promise<CreationResult> => {
+    async (
+      collection: Repo.CollectionDefinition,
+    ): Promise<DocumentCollection> => {
       console.info(`Creating collection ${collection.name}`);
 
       const documentCollection: DocumentCollection = await createCollection(
