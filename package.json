@@ -10,6 +10,7 @@
     "build": "tsc -p .",
     "start": "npm run build && node dist/entry.js",
     "live": "nodemon -e ts --exec \"npm run start\"",
+    "reset:repo": "npm run teardown:repo && npm run setup:repo",
     "setup:repo": "node dist/repository/setup.js",
     "teardown:repo": "node dist/repository/teardown.js",
     "postbuild": "ef-tspm"
