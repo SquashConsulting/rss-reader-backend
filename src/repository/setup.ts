@@ -11,9 +11,6 @@ import Edges from 'repository/edges';
 import Collections from 'repository/collections';
 
 import createCollection from './utils/createCollection';
-import createMigrations from './utils/createMigrations';
-
-createMigrations();
 
 // Create Document Collections
 Promise.all(
