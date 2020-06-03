@@ -6,6 +6,13 @@ import { DocumentCollection } from 'arangojs';
 /* Constants */
 const name = 'feeds';
 const collection: DocumentCollection<Repo.Feed> = DB.collection(name);
+
+const index: Repo.IndexDefinition = {
+  type: 'hash',
+  unique: true,
+  fields: ['link'],
+};
+
 const schema = joi
   .object({
     link: joi.string().required(),
@@ -14,5 +21,11 @@ const schema = joi
   .required();
 
 /* Exports */
-const defaultExport: Repo.CollectionExport = { name, schema, collection };
+const defaultExport: Repo.CollectionExport = {
+  name,
+  index,
+  schema,
+  collection,
+};
+
 export default defaultExport;
