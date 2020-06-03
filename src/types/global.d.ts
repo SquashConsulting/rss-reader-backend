@@ -17,6 +17,7 @@ declare global {
     type DateTimestamp = string;
     type CollectionType = 'edge' | 'document';
     type Collection = EdgeCollection | DocumentCollection;
+
     type IndexType =
       | 'ttl'
       | 'geo'
@@ -24,7 +25,12 @@ declare global {
       | 'skiplist'
       | 'fulltext'
       | 'persistent';
-    type IndexDefinition = { type: IndexType; fields: string[] };
+
+    type IndexDefinition = {
+      type: IndexType;
+      fields: string[];
+      unique?: boolean;
+    };
 
     interface CollectionMeta {
       id: string;
@@ -57,6 +63,48 @@ declare global {
   }
 
   namespace Arango {
+    namespace Foxx {
+      type ConfigurationType =
+        | 'json'
+        | 'string'
+        | 'number'
+        | 'boolean'
+        | 'integer'
+        | 'password';
+
+      interface Configuration {
+        default?: string;
+        description?: string;
+        type: ConfigurationType;
+      }
+
+      interface Manifest {
+        name: string;
+        main: string;
+        author: string;
+        version: string;
+        $schema: string;
+        tests: string[];
+        engines: object;
+        scripts: object;
+        description: string;
+        dependencies: object;
+        configuration: { [key: string]: Configuration };
+      }
+
+      interface Metadata {
+        name: string;
+        path: string;
+        mount: string;
+        version: string;
+        legacy: boolean;
+        options: object;
+        checksum: string;
+        manifest: Manifest;
+        development: boolean;
+      }
+    }
+
     interface InsertResults {
       _id: string;
       _key: string;
