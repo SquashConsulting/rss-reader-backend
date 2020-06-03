@@ -21,13 +21,26 @@ function modelBuilder<T extends object = any>(
     return Collection.document({ _key: id });
   }
 
-  async function find(searchObject: Document): Promise<Document<T>[]> {
+  async function find(searchObject: object): Promise<Document<T>[]> {
     const cursor = await Collection.byExample(searchObject);
     return cursor.all();
   }
 
-  function findOne(searchObject: Document): Promise<Document<T>> {
-    return Collection.firstExample(searchObject);
+  async function findOne(searchObject: object): Promise<Document<T>> {
+    try {
+      const doc = await Collection.firstExample(searchObject);
+      return doc;
+    } catch (error) {
+      console.debug(
+        `
+        [ARANGO ERROR]: ${error.message},
+        collection: ${Collection.name},
+        searchObject: ${JSON.stringify(searchObject)}
+        `,
+      );
+
+      return null;
+    }
   }
 
   async function create(body: T): Promise<Document<T>> {
