@@ -51,9 +51,9 @@ async function Create(req: Request, res: Response): Promise<void> {
 
 async function UpdateItems(req: Request, res: Response): Promise<void> {
   const feedId = req.params.id;
-  const feed = await Feed.get(feedId);
+  const feed: Document<Repo.Feed> = await Feed.get(feedId);
 
-  const newItems = await Parser.getNewItems(feed);
+  const newItems: Repo.Item[] = await Parser.getNewItems(feed);
 
   if (!newItems) {
     res.status(204).end();
