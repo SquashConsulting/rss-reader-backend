@@ -4,8 +4,12 @@ import { Document } from 'arangojs/lib/cjs/util/types';
 
 import Feed from 'models/feed';
 import Item from 'models/item';
+
 import Parser from 'services/parser';
 import Daemon from 'services/daemon';
+
+import Serializer from 'serializers';
+
 import ControllerDecorator from 'decorators/controller';
 
 /* Exports */
@@ -16,7 +20,7 @@ async function Get(req: Request, res: Response): Promise<void> {
   const feed: Document<Repo.Feed> = await Feed.get(req.params.id);
   const feedView: Document<Repo.Feed> = await Feed.view(feed);
 
-  res.status(200).send({ feed: feedView });
+  res.status(200).json(Serializer.serialize('feeds', feedView));
 }
 
 async function Create(req: Request, res: Response): Promise<void> {
@@ -44,7 +48,9 @@ async function Create(req: Request, res: Response): Promise<void> {
 
   await Item.create(items, savedFeed._id);
 
-  res.status(200).send({ items, feed: savedFeed });
+  const feedView = await Feed.view(savedFeed);
+
+  res.status(200).send(Serializer.serialize('feeds', feedView));
 
   Daemon.createJob(savedFeed);
 }
@@ -60,7 +66,7 @@ async function UpdateItems(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  res.status(200).json({ items: newItems });
+  res.status(200).json(Serializer.serialize('items', newItems));
 
   Promise.all([
     Feed.edit(feed._key, {
