@@ -1,5 +1,7 @@
-import bodyParser from 'body-parser';
 import * as Express from 'express';
+
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
 /* Exports */
 export { initMiddlewares, handleRouterErrors };
@@ -8,6 +10,7 @@ export { initMiddlewares, handleRouterErrors };
 function initMiddlewares(server: Express.Express): Express.Express {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: false }));
+  server.use(morgan('combined'));
 
   return server;
 }

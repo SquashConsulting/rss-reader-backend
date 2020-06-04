@@ -23,6 +23,7 @@
     "@types/express": "^4.17.6",
     "@types/joi": "^14.3.4",
     "@types/lodash.omit": "^4.5.6",
+    "@types/morgan": "^1.9.0",
     "@types/node": "^13.5.0",
     "@types/yargs": "^15.0.4",
     "nodemon": "^2.0.4",
@@ -38,6 +39,7 @@
     "express-joi-validator": "^2.0.1",
     "joi": "^14.3.1",
     "lodash.omit": "^4.5.0",
+    "morgan": "^1.10.0",
     "rss-parser": "^3.8.0"
   }
 }
