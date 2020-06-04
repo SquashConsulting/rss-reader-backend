@@ -9,7 +9,7 @@ import FeedController from 'controllers/feed';
 const feedRouter: Router = Router();
 
 const paramSchema = {
-  id: joi.number().integer().required(),
+  id: joi.string().required(),
 };
 
 feedRouter.get(
