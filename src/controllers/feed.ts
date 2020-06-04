@@ -1,6 +1,6 @@
 import omit from 'lodash.omit';
+import { Request, Response } from 'express';
 import { Document } from 'arangojs/lib/cjs/util/types';
-import { Request, Response, NextFunction } from 'express';
 
 import Feed from 'models/feed';
 import Item from 'models/item';
@@ -9,7 +9,7 @@ import Daemon from 'services/daemon';
 import ControllerDecorator from 'decorators/controller';
 
 /* Exports */
-export default ControllerDecorator({ Get, Create });
+export default ControllerDecorator({ Get, Create, UpdateItems });
 
 /* Module Functions */
 async function Get(req: Request, res: Response): Promise<void> {
@@ -19,11 +19,7 @@ async function Get(req: Request, res: Response): Promise<void> {
   res.status(200).send({ feed: feedView });
 }
 
-async function Create(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> {
+async function Create(req: Request, res: Response): Promise<void> {
   const feed: Repo.Feed = req.body.feed;
 
   {
@@ -38,7 +34,7 @@ async function Create(
 
   const items: Repo.Item[] = parsedFeed.items as Repo.Item[];
   const feedBody: Repo.Feed = omit(parsedFeed, 'items') as Repo.Feed;
-  const lastItemGuid = items[0]?.guid;
+  const lastItemGuid = items[0].guid;
 
   const savedFeed: Document<Repo.Feed> = await Feed.create({
     ...feedBody,
@@ -51,4 +47,25 @@ async function Create(
   res.status(200).send({ items, feed: savedFeed });
 
   Daemon.createJob(savedFeed);
+}
+
+async function UpdateItems(req: Request, res: Response): Promise<void> {
+  const feedId = req.params.id;
+  const feed = await Feed.get(feedId);
+
+  const newItems = await Parser.getNewItems(feed);
+
+  if (!newItems) {
+    res.status(204).end();
+    return;
+  }
+
+  res.status(200).json({ items: newItems });
+
+  Promise.all([
+    Feed.edit(feed._key, {
+      lastItemGuid: newItems[0].guid,
+    }),
+    Item.create(newItems, feed._id),
+  ]);
 }

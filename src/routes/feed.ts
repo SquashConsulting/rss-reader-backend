@@ -8,12 +8,14 @@ import FeedController from 'controllers/feed';
 
 const feedRouter: Router = Router();
 
+const paramSchema = {
+  id: joi.number().integer().required(),
+};
+
 feedRouter.get(
   '/:id',
   validateRequest({
-    params: {
-      id: joi.number().integer().required(),
-    },
+    params: paramSchema,
   }),
   FeedController.Get,
 );
@@ -26,6 +28,14 @@ feedRouter.post(
     },
   }),
   FeedController.Create,
+);
+
+feedRouter.put(
+  '/:id/parse',
+  validateRequest({
+    params: paramSchema,
+  }),
+  FeedController.UpdateItems,
 );
 
 export default feedRouter;
