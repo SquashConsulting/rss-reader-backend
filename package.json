@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "express-joi-validator": "^2.0.1",
     "joi": "^14.3.1",
+    "json-api-serializer": "^2.4.2",
     "lodash.omit": "^4.5.0",
     "morgan": "^1.10.0",
     "rss-parser": "^3.8.0"
