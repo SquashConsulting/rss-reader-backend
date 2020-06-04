@@ -1,5 +1,5 @@
-import { Document } from 'arangojs/lib/cjs/util/types';
 import { DocumentCollection, EdgeCollection } from 'arangojs';
+import { Document, DocumentData } from 'arangojs/lib/cjs/util/types';
 
 /* Exports */
 export default modelBuilder;
@@ -31,25 +31,20 @@ function modelBuilder<T extends object = any>(
       const doc = await Collection.firstExample(searchObject);
       return doc;
     } catch (error) {
-      console.debug(
-        `
-        [ARANGO ERROR]: ${error.message},
-        collection: ${Collection.name},
-        searchObject: ${JSON.stringify(searchObject)}
-        `,
-      );
-
       return null;
     }
   }
 
-  async function create(body: T): Promise<Document<T>> {
+  async function create(body: DocumentData<T>): Promise<Document<T>> {
     const meta: Arango.InsertResults = await Collection.save(body);
 
     return { ...meta, ...body };
   }
 
-  async function edit(id: string, body: T): Promise<Document<T>> {
+  async function edit(
+    id: string,
+    body: DocumentData<Partial<T>>,
+  ): Promise<Document<T>> {
     const meta: Arango.InsertResults = await Collection.update(
       { _key: id },
       body,
