@@ -1,5 +1,5 @@
 import omit from 'lodash.omit';
-import { Request, Response } from 'express';
+import { Request, Response, query } from 'express';
 import { Document } from 'arangojs/lib/cjs/util/types';
 
 import Feed from 'models/feed';
@@ -17,10 +17,19 @@ export default ControllerDecorator({ Get, Create, UpdateItems });
 
 /* Module Functions */
 async function Get(req: Request, res: Response): Promise<void> {
-  const feed: Document<Repo.Feed> = await Feed.get(req.params.id);
-  const feedView: Document<Repo.Feed> = await Feed.view(feed);
+  const feedId = req.params.id;
+  const limit = parseInt(req.query.limit as string, 10);
+  const offset = parseInt(req.query.offset as string, 10);
 
-  res.status(200).json(Serializer.serialize('feeds', feedView));
+  const feedView: Document<Repo.Feed> = await Feed.view(feedId, limit, offset);
+
+  res.status(200).json(
+    Serializer.serialize('feeds', feedView, {
+      limit,
+      offset,
+      count: feedView.items.length,
+    }),
+  );
 }
 
 async function Create(req: Request, res: Response): Promise<void> {
@@ -48,9 +57,7 @@ async function Create(req: Request, res: Response): Promise<void> {
 
   await Item.create(items, savedFeed._id);
 
-  const feedView = await Feed.view(savedFeed);
-
-  res.status(200).send(Serializer.serialize('feeds', feedView));
+  res.status(200).send(Serializer.serialize('feeds', savedFeed));
 
   Daemon.createJob(savedFeed);
 }
