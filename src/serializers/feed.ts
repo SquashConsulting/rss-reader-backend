@@ -11,6 +11,7 @@ const SerializerOptions: Options = {
   },
   topLevelLinks: {
     next: (data: Document<Repo.Feed>, extraData: ExtraData) =>
+      extraData &&
       `/feeds/${data._key}?limit=${extraData.limit}&offset=${extraData.count}`,
   },
   relationships: {
