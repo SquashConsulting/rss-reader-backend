@@ -1,3 +1,9 @@
+/**
+ * `/feeds` Router Initilzer
+ *
+ * @packageDocumentation
+ * @category Router
+ */
 import { Router } from 'express';
 
 import joi from 'joi';
@@ -6,7 +12,20 @@ import validateRequest from 'express-joi-validator';
 import Feed from 'repository/collections/feed';
 import FeedController from 'controllers/feed';
 
-const feedRouter: Router = Router();
+/**
+ * FeedRouter defines the following routes:
+ *
+ * * GET `/:id` - Returns {@link "serializers/feed".SerializerOptions | Feed Serializer}
+ *   * Params - {@link paramSchema | Param Schema}
+ *   * Query - {@link querySchema | Query Schema}
+ *
+ * * POST `/` - Adds a new RSS Feed
+ *   * Body: {@link "repository/collections/feed".schema | Feed Schema}
+ *
+ * * PUT `/:id/parse` - Fetches Latest RSS Changes and Updates New Items
+ *   * Params - {@link paramSchema | Param Schema}
+ */
+const FeedRouter: Router = Router();
 
 const paramSchema = {
   id: joi.string().required(),
@@ -17,7 +36,7 @@ const querySchema = {
   offset: joi.number().optional().default(0),
 };
 
-feedRouter.get(
+FeedRouter.get(
   '/:id',
   validateRequest({
     query: querySchema,
@@ -26,7 +45,7 @@ feedRouter.get(
   FeedController.Get,
 );
 
-feedRouter.post(
+FeedRouter.post(
   '/',
   validateRequest({
     body: {
@@ -36,7 +55,7 @@ feedRouter.post(
   FeedController.Create,
 );
 
-feedRouter.put(
+FeedRouter.put(
   '/:id/parse',
   validateRequest({
     params: paramSchema,
@@ -44,4 +63,4 @@ feedRouter.put(
   FeedController.UpdateItems,
 );
 
-export default feedRouter;
+export default FeedRouter;
