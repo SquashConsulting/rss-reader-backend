@@ -1,9 +1,14 @@
+/**
+ * Category Collection Definition
+ *
+ * @packageDocumentation
+ * @category Collection
+ */
 import joi from 'joi';
 
 import DB from 'repository/database';
 import { DocumentCollection } from 'arangojs';
 
-/* Constants */
 const name = 'feeds';
 const collection: DocumentCollection<Repo.Feed> = DB.collection(name);
 
@@ -13,6 +18,10 @@ const index: Repo.IndexDefinition = {
   fields: ['link'],
 };
 
+/**
+ * - `link` - `String` [required]
+ * - `title` - `String` [optional]
+ */
 const schema = joi
   .object({
     link: joi.string().required(),
@@ -20,12 +29,10 @@ const schema = joi
   })
   .required();
 
-/* Exports */
-const defaultExport: Repo.CollectionExport = {
+export default {
   name,
   index,
   schema,
   collection,
-};
+} as Repo.CollectionExport;
 
-export default defaultExport;
