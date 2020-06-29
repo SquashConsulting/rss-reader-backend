@@ -14,3 +14,6 @@
 - `npm run setup:repo` - sets up all the necessary document and edge collections with required indexes.
 - `npm run teardown:repo` - truncates all the existing non-system document/edge collections.
 - `npm run reset:repo` - tears down the db then sets it up.
+
+## API Documentation
+You can check out the Docs [here](https://squash.consulting/rss-docs/backend/globals.html)
