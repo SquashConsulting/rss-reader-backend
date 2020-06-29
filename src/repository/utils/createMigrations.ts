@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @internal
+ */
 import { DocumentCollection } from 'arangojs';
 
 import DB from 'repository/database';

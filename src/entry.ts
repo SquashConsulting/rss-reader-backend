@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @internal
+ */
 import express, * as Express from 'express';
 
 import pipe from 'utils/pipe';
