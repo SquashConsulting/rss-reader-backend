@@ -1,20 +1,32 @@
 /**
  * The Parser service is responsible for RSS Feed parsing.
+ *
+ * @packageDocumentation
+ * @category Service
  */
-
 import Parser from 'rss-parser';
 import { Document } from 'arangojs/lib/cjs/util/types';
 
-/* Constants */
 const PARSER = new Parser();
 
-/* Exports */
 export default { parseURL, getNewItems };
 
-/* Module Functions */
+/**
+ * Given a {@link "repository/collections/feed" | Feed},
+ * tries to fetch new RSS Feed Items, check the latest saved item,
+ * and return the newly updated items.
+ *
+ * **Example:**
+ * ```typescript
+ * const feed: Document<Repo.Feed> = await Feed.get(feedId);
+ * const newItems: Repo.Item[] = await Parser.getNewItems(feed);
+ *
+ * Item.create(newItems, feed._id);
+ * ```
+ */
 async function getNewItems(
   feed: Document<Repo.Feed>,
-): Promise<Repo.Item[] | null> {
+): Promise<Repo.Item[]> {
   const parsedFeed = await parseURL(feed.link);
   const items: Repo.Item[] = getStandardizedItems(
     parsedFeed.items,
@@ -31,6 +43,16 @@ async function getNewItems(
   return newItems;
 }
 
+/**
+ * Given a url to an RSS Feed,
+ * parses the feed and returns in a standardized form.
+ *
+ * **Example:**
+ * ```typescript
+ * const feed = req.body.feed;
+ * const parsedFeed: Parser.Output = await Parser.parseURL(feed.link);
+ * ```
+ */
 async function parseURL(url: string): Promise<Parser.Output> {
   try {
     const feed = await PARSER.parseURL(url);
@@ -42,7 +64,9 @@ async function parseURL(url: string): Promise<Parser.Output> {
   }
 }
 
-/* Private Functions */
+/**
+ * @internal
+ */
 function buildError(error: Error): Error & { statusCode?: number } {
   // Standardizing possible error messages
   // Error messages taken from: https://github.com/rbren/rss-parser/blob/master/lib/parser.js
@@ -60,6 +84,9 @@ function buildError(error: Error): Error & { statusCode?: number } {
   return newError;
 }
 
+/**
+ * @internal
+ */
 function getStandardizedItems(items: Parser.Item[]): Parser.Item[] {
   const item = items[0];
 
