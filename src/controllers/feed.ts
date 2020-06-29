@@ -1,5 +1,5 @@
 import omit from 'lodash.omit';
-import { Request, Response, query } from 'express';
+import { Request, Response } from 'express';
 import { Document } from 'arangojs/lib/cjs/util/types';
 
 import Feed from 'models/feed';
