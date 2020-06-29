@@ -1,3 +1,10 @@
+/**
+ * Model Builder
+ * This module provides basic CRUD operations necessary for a ArangoDB Model.
+ *
+ * @packageDocumentation
+ * @category Model
+ */
 import { DocumentCollection, EdgeCollection } from 'arangojs';
 import { GeneratedAqlQuery } from 'arangojs/lib/cjs/aql-query';
 import { Document, DocumentData } from 'arangojs/lib/cjs/util/types';
@@ -5,10 +12,18 @@ import { Document, DocumentData } from 'arangojs/lib/cjs/util/types';
 import DB from 'repository/database';
 import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
 
-/* Exports */
 export default modelBuilder;
 
-/* Module Functions */
+/**
+ * Given a `DocumentCollection` and `Repo` type,
+ * returns an object with basic CRUD operations for the given Model.
+ *
+ * **Example:**
+ * ```typescript
+ * const defaultOperations = modelBuilder<Repo.Feed>(Feed.Collection);
+ * const feed = await defaultOperations.get(feedId);
+ * ```
+ */
 function modelBuilder<T extends object = any>(
   Collection: DocumentCollection<T> | EdgeCollection<T>,
 ) {

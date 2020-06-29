@@ -1,3 +1,9 @@
+/**
+ * Database Definition
+ *
+ * @packageDocumentation
+ * @category Repository
+ */
 import { Database } from 'arangojs';
 
 import 'configs/loadENV';

@@ -1,22 +1,33 @@
+/**
+ * Collection Creator
+ *
+ * @packageDocumentation
+ * @category Utility
+ */
 import { Database, DocumentCollection, EdgeCollection } from 'arangojs';
 
-/* Type Definitions */
-/* Module Exports */
 export default createCollection;
 
-/* Module Functions */
+/**
+ * Creates an ArangoDB Edge Collection if it doesn't exist
+ */
 async function createCollection(
   DB: Database,
   name: string,
   type: 'edge',
   isSystem?: boolean,
 ): Promise<EdgeCollection>;
+
+/**
+ * Creates an ArangoDB Document Collection if it doesn't exist
+ */
 async function createCollection(
   DB: Database,
   name: string,
   type: 'document',
   isSystem?: boolean,
 ): Promise<DocumentCollection>;
+
 async function createCollection(
   DB: Database,
   name: string,

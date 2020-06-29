@@ -1,9 +1,14 @@
+/**
+ * Feed Item Collection Definition
+ *
+ * @packageDocumentation
+ * @category Collection
+ */
 import joi from 'joi';
 
 import DB from 'repository/database';
 import { DocumentCollection } from 'arangojs';
 
-/* Constants */
 const name = 'items';
 const collection: DocumentCollection<Repo.Item> = DB.collection(name);
 const index: Repo.IndexDefinition = { type: 'hash', fields: ['guid'] };
@@ -14,12 +19,9 @@ const schema = joi
   })
   .required();
 
-/* Exports */
-const defaultExport: Repo.CollectionExport = {
+export default {
   name,
   index,
   schema,
   collection,
-};
-
-export default defaultExport;
+} as Repo.CollectionExport;

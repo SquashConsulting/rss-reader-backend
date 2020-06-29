@@ -1,12 +1,24 @@
+/**
+ * `/categories` Router Initilzer
+ *
+ * @packageDocumentation
+ * @category Router
+ */
 import { Router } from 'express';
 import validateRequest from 'express-joi-validator';
 
 import Category from 'repository/collections/category';
 import CategoryController from 'controllers/category';
 
-const categoryRouter: Router = Router();
+/**
+ * CategoryRouter defines the following routes:
+ *
+ * * POST `/` - Adds a new RSS Category 
+ *   * Body: {@link "repository/collections/category".schema | Category Schema}
+ */
+const CategoryRouter: Router = Router();
 
-categoryRouter.post(
+CategoryRouter.post(
   '/',
   validateRequest({
     body: {
@@ -16,4 +28,4 @@ categoryRouter.post(
   CategoryController.Create,
 );
 
-export default categoryRouter;
+export default CategoryRouter;

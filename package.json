@@ -1,5 +1,5 @@
 {
-  "name": "rss-reader",
+  "name": "rss-reader-backend",
   "version": "0.1.0",
   "description": "Modern RSS Reader",
   "main": "dist/entry.js",
@@ -13,7 +13,8 @@
     "reset:repo": "npm run teardown:repo && npm run setup:repo",
     "setup:repo": "node dist/repository/setup.js",
     "teardown:repo": "node dist/repository/teardown.js",
-    "postbuild": "ef-tspm > /dev/null"
+    "postbuild": "ef-tspm > /dev/null",
+    "generate:docs": "./node_modules/.bin/typedoc --stripInternal --out docs src --name \"RSS Reader Backend\" --includeVersion"
   },
   "bin": "./dist/entry.js",
   "devDependencies": {

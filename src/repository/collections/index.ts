@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @internal
+ */
 import Feed from './feed';
 import Item from './item';
 import Category from './category';

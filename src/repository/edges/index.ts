@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @internal
+ */
 import HasItems from './hasItems';
 import HasFeeds from './hasFeeds';
 

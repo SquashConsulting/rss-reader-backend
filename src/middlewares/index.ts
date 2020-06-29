@@ -1,12 +1,19 @@
+/**
+ * Middleware Definitions
+ *
+ * @packageDocumentation
+ * @category Middleware
+ */
 import * as Express from 'express';
 
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
-/* Exports */
 export { initMiddlewares, handleRouterErrors };
 
-/* Module Functions */
+/**
+ * Given an Express App, this function sets up the initial middlewares
+ */
 function initMiddlewares(server: Express.Express): Express.Express {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: false }));
@@ -15,6 +22,9 @@ function initMiddlewares(server: Express.Express): Express.Express {
   return server;
 }
 
+/**
+ * Given an Express App, this function sets up Router Error Handler Middleware.
+ */
 function handleRouterErrors(server: Express.Express): Express.Express {
   server.use(
     (

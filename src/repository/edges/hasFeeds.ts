@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @internal
+ */
 import DB from 'repository/database';
 import { EdgeCollection } from 'arangojs';
 

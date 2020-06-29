@@ -1,8 +1,16 @@
 /**
  * This s a script file that can be called by running `npm run setup:repo`
- * NOTE: This file is not meant to be imported elsewhere in the project.
+ *
+ * *NOTE: This file is not meant to be imported elsewhere in the project!*
+ *
+ * ### Examples:
+ * ```sh
+ * npm run setup:repo
+ * ```
+ *
+ * @packageDocumentation
+ * @category Executable
  */
-
 import { EdgeCollection, DocumentCollection } from 'arangojs';
 
 import DB from './database';

@@ -1,14 +1,29 @@
+/**
+ * Feed Item Model Definition
+ *
+ * This Model exports the {@link "models/modelBuilder" | default} operations
+ * overriding the {@link create} action
+ *
+ * @packageDocumentation
+ * @category Model
+ */
 import modelBuilder from './modelBuilder';
 import Item from 'repository/collections/item';
 import HasItems from 'repository/edges/hasItems';
-import { DocumentHandle } from 'arangojs/lib/cjs/collection';
-import { Document } from 'arangojs/lib/cjs/util/types';
 
-/* Exports */
 const defaultOperations = modelBuilder<Repo.Item>(Item.collection);
 export default { ...defaultOperations, create };
 
-/* Module Functions */
+/**
+ * Given an array of Feed Items,
+ * saves them in the database and creates a `HasItems`
+ * relationship between Feed and Items.
+ *
+ * **Example:**
+ * ```typescript
+ * Items.create(items, feedId);
+ * ```
+ */
 async function create(
   items: Repo.Item | Repo.Item[],
   feedId: string,
