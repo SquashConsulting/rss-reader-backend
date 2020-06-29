@@ -1,8 +1,11 @@
-import { Document, Edge } from 'arangojs/lib/cjs/util/types';
+import { aql } from 'arangojs';
+
+import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
+import { Document } from 'arangojs/lib/cjs/util/types';
+import { GeneratedAqlQuery } from 'arangojs/lib/cjs/aql-query';
 
 import modelBuilder from './modelBuilder';
 import Feed from 'repository/collections/feed';
-import Item from 'repository/collections/item';
 import HasItems from 'repository/edges/hasItems';
 
 /* Exports */
@@ -10,17 +13,25 @@ const defaultOperations = modelBuilder<Repo.Feed>(Feed.collection);
 export default { ...defaultOperations, view };
 
 /* Module Functions */
-async function view(feed: Document<Repo.Feed>): Promise<Document<Repo.Feed>> {
-  const hasItems: Edge<Repo.HasItems> = await HasItems.collection.outEdges(
-    feed,
-  );
+async function view(
+  id: string,
+  limit: number = 10,
+  offset: number = 0,
+): Promise<Document<Repo.Feed>> {
+  const viewQuery: GeneratedAqlQuery = aql`
+    LET feed = DOCUMENT(${Feed.collection}, ${id})
+    LET items = (
+      FOR item, has_items IN OUTBOUND feed ${HasItems.collection}
+        SORT has_items.createdAt DESC
+        LIMIT ${offset}, ${limit}
+        RETURN item
+      )
 
-  const items: Document<Repo.Item>[] = await Promise.all(
-    hasItems.map(
-      (edge: Edge<Repo.HasItems>): Promise<Document> =>
-        Item.collection.document({ _id: edge._to }),
-    ),
-  );
+    RETURN MERGE(feed, { items })
+  `;
 
-  return { ...feed, items };
+  const cursor: ArrayCursor = await defaultOperations.executeAQL(viewQuery);
+  const feed: Document<Repo.Feed> = await cursor.next();
+
+  return feed;
 }

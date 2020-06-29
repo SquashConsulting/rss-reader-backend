@@ -12,9 +12,15 @@ const paramSchema = {
   id: joi.string().required(),
 };
 
+const querySchema = {
+  limit: joi.number().optional().default(10),
+  offset: joi.number().optional().default(0),
+};
+
 feedRouter.get(
   '/:id',
   validateRequest({
+    query: querySchema,
     params: paramSchema,
   }),
   FeedController.Get,

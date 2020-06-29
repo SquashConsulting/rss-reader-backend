@@ -1,5 +1,9 @@
 import { DocumentCollection, EdgeCollection } from 'arangojs';
+import { GeneratedAqlQuery } from 'arangojs/lib/cjs/aql-query';
 import { Document, DocumentData } from 'arangojs/lib/cjs/util/types';
+
+import DB from 'repository/database';
+import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
 
 /* Exports */
 export default modelBuilder;
@@ -15,6 +19,7 @@ function modelBuilder<T extends object = any>(
     create,
     edit,
     remove,
+    executeAQL,
   };
 
   function get(id: string): Promise<Document<T>> {
@@ -55,5 +60,9 @@ function modelBuilder<T extends object = any>(
 
   async function remove(id: string): Promise<void> {
     Collection.remove({ _key: id });
+  }
+
+  async function executeAQL(template: GeneratedAqlQuery): Promise<ArrayCursor> {
+    return DB.query(template);
   }
 }
