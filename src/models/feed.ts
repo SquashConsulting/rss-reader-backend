@@ -1,3 +1,12 @@
+/**
+ * Feed Model Definition
+ *
+ * This Model exports the {@link "models/modelBuilder" | default} operations
+ * extending it with {@linkcode view} operation.
+ *
+ * @packageDocumentation
+ * @category Model
+ */
 import { aql } from 'arangojs';
 
 import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
@@ -8,11 +17,19 @@ import modelBuilder from './modelBuilder';
 import Feed from 'repository/collections/feed';
 import HasItems from 'repository/edges/hasItems';
 
-/* Exports */
 const defaultOperations = modelBuilder<Repo.Feed>(Feed.collection);
 export default { ...defaultOperations, view };
 
-/* Module Functions */
+/**
+ * Given a Feed's id and optional query parameters,
+ * returns a Feed with its relationships.
+ *
+ * **Example:**
+ * ```typescript
+ * const feedView = await Feed.view(feedId, 20, 10);
+ * res.json(Serializer.serialize('feeds', feedView));
+ * ```
+ */
 async function view(
   id: string,
   limit: number = 10,
