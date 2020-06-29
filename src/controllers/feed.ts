@@ -1,3 +1,9 @@
+/**
+ * Feed Controller
+ *
+ * @packageDocumentation
+ * @category Controller
+ */
 import omit from 'lodash.omit';
 import { Request, Response } from 'express';
 import { Document } from 'arangojs/lib/cjs/util/types';
@@ -12,10 +18,14 @@ import Serializer from 'serializers';
 
 import ControllerDecorator from 'decorators/controller';
 
-/* Exports */
 export default ControllerDecorator({ Get, Create, UpdateItems });
 
-/* Module Functions */
+/**
+ * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
+ * gets the Feed with its relationships.
+ *
+ * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
+ */
 async function Get(req: Request, res: Response): Promise<void> {
   const feedId = req.params.id;
   const limit = parseInt(req.query.limit as string, 10);
@@ -32,6 +42,13 @@ async function Get(req: Request, res: Response): Promise<void> {
   );
 }
 
+/**
+ * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
+ * creates a Feed, fetches and saves RSS Feed Items, and creates a Daemon job
+ * to repeatedly fetch the Feed.
+ *
+ * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
+ */
 async function Create(req: Request, res: Response): Promise<void> {
   const feed: Repo.Feed = req.body.feed;
 
@@ -62,6 +79,12 @@ async function Create(req: Request, res: Response): Promise<void> {
   Daemon.createJob(savedFeed);
 }
 
+/**
+ * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
+ * Finds newly updated RSS Feed Items and updates them in the database.
+ *
+ * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
+ */
 async function UpdateItems(req: Request, res: Response): Promise<void> {
   const feedId = req.params.id;
   const feed: Document<Repo.Feed> = await Feed.get(feedId);
