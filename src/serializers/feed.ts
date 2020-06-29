@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @category Serializer
+ */
 import { Options } from 'json-api-serializer';
 import { Document } from 'arangojs/lib/cjs/util/types';
 
