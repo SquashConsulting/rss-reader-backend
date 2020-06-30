@@ -2,26 +2,26 @@
  * @packageDocumentation
  * @internal
  */
-import { DocumentCollection } from 'arangojs';
+import { DocumentCollection } from "arangojs";
 
-import DB from 'repository/database';
+import DB from "repository/database";
 
-import createCollection from './createCollection';
+import createCollection from "./createCollection";
 
 export default async function createMigrations() {
-  console.info('Creating migrations collection');
+  console.info("Creating migrations collection");
 
   const migrationCollection: DocumentCollection = await createCollection(
     DB,
-    '_migrations',
-    'document',
+    "_migrations",
+    "document",
     true,
   );
 
   await migrationCollection.ensureIndex({
-    type: 'hash',
-    fields: ['latestTimestamp'],
+    type: "hash",
+    fields: ["latestTimestamp"],
   });
 
-  migrationCollection.save({ _key: 'MASTER', latestTimestamp: null });
+  migrationCollection.save({ _key: "MASTER", latestTimestamp: null });
 }

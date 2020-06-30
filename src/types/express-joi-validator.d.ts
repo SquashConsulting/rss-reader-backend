@@ -1,6 +1,6 @@
-declare module 'express-joi-validator' {
-  import { NextFunction, Response, Request } from 'express';
-  import { SchemaLike, ValidationOptions, ValidationResult } from 'joi';
+declare module "express-joi-validator" {
+  import { NextFunction, Response, Request } from "express";
+  import { SchemaLike, ValidationOptions, ValidationResult } from "joi";
 
   interface Schema {
     body?: SchemaLike;
@@ -8,11 +8,7 @@ declare module 'express-joi-validator' {
     params?: SchemaLike;
   }
 
-  type JoiValidator = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => ValidationResult<Schema>;
+  type JoiValidator = (req: Request, res: Response, next: NextFunction) => ValidationResult<Schema>;
 
   function Validator(schema: Schema, options?: ValidationOptions): JoiValidator;
 

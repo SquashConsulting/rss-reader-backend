@@ -24,8 +24,8 @@ import DB from "./database";
         const dbCollection: Repo.Collection = DB.collection(collection.name);
 
         return dbCollection.truncate();
-      }
-    )
+      },
+    ),
   );
 
   DB.collection("_jobs").truncate();

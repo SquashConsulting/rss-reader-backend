@@ -11,27 +11,25 @@
  * @packageDocumentation
  * @category Executable
  */
-import { EdgeCollection, DocumentCollection } from 'arangojs';
+import { EdgeCollection, DocumentCollection } from "arangojs";
 
-import DB from './database';
+import DB from "./database";
 
-import Edges from 'repository/edges';
-import Collections from 'repository/collections';
+import Edges from "repository/edges";
+import Collections from "repository/collections";
 
-import createCollection from './utils/createCollection';
+import createCollection from "./utils/createCollection";
 
 // Create Document Collections
 Promise.all(
   Collections.map(
-    async (
-      collection: Repo.CollectionDefinition,
-    ): Promise<DocumentCollection> => {
+    async (collection: Repo.CollectionDefinition): Promise<DocumentCollection> => {
       console.info(`Creating collection ${collection.name}`);
 
       const documentCollection: DocumentCollection = await createCollection(
         DB,
         collection.name,
-        'document',
+        "document",
       );
 
       if (!collection.index) return documentCollection;
@@ -46,15 +44,11 @@ Promise.all(
     async (edge: Repo.EdgeDefinition): Promise<void> => {
       console.info(`Creating edge collection ${edge.name}`);
 
-      const edgeCollection: EdgeCollection = await createCollection(
-        DB,
-        edge.name,
-        'edge',
-      );
+      const edgeCollection: EdgeCollection = await createCollection(DB, edge.name, "edge");
 
       edgeCollection.ensureIndex({
-        type: 'hash',
-        fields: ['_from', '_to'],
+        type: "hash",
+        fields: ["_from", "_to"],
       });
     },
   ),

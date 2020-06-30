@@ -4,7 +4,7 @@
  * @packageDocumentation
  * @category Utility
  */
-import { Database, DocumentCollection, EdgeCollection } from 'arangojs';
+import { Database, DocumentCollection, EdgeCollection } from "arangojs";
 
 export default createCollection;
 
@@ -14,7 +14,7 @@ export default createCollection;
 async function createCollection(
   DB: Database,
   name: string,
-  type: 'edge',
+  type: "edge",
   isSystem?: boolean,
 ): Promise<EdgeCollection>;
 
@@ -24,7 +24,7 @@ async function createCollection(
 async function createCollection(
   DB: Database,
   name: string,
-  type: 'document',
+  type: "document",
   isSystem?: boolean,
 ): Promise<DocumentCollection>;
 
@@ -34,8 +34,7 @@ async function createCollection(
   type: Repo.CollectionType,
   isSystem: boolean = false,
 ): Promise<Repo.Collection> {
-  const collection =
-    type === 'edge' ? DB.edgeCollection(name) : DB.collection(name);
+  const collection = type === "edge" ? DB.edgeCollection(name) : DB.collection(name);
 
   const collectionExists = await collection.exists();
   if (collectionExists) return collection;

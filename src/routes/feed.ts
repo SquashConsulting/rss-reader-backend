@@ -4,13 +4,13 @@
  * @packageDocumentation
  * @category Router
  */
-import { Router } from 'express';
+import { Router } from "express";
 
-import joi from 'joi';
-import validateRequest from 'express-joi-validator';
+import joi from "joi";
+import validateRequest from "express-joi-validator";
 
-import Feed from 'repository/collections/feed';
-import FeedController from 'controllers/feed';
+import Feed from "repository/collections/feed";
+import FeedController from "controllers/feed";
 
 /**
  * FeedRouter defines the following routes:
@@ -37,7 +37,7 @@ const querySchema = {
 };
 
 FeedRouter.get(
-  '/:id',
+  "/:id",
   validateRequest({
     query: querySchema,
     params: paramSchema,
@@ -46,7 +46,7 @@ FeedRouter.get(
 );
 
 FeedRouter.post(
-  '/',
+  "/",
   validateRequest({
     body: {
       feed: Feed.schema,
@@ -56,7 +56,7 @@ FeedRouter.post(
 );
 
 FeedRouter.put(
-  '/:id/parse',
+  "/:id/parse",
   validateRequest({
     params: paramSchema,
   }),

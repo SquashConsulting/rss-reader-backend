@@ -5,12 +5,12 @@
  * @packageDocumentation
  * @category Model
  */
-import { DocumentCollection, EdgeCollection } from 'arangojs';
-import { GeneratedAqlQuery } from 'arangojs/lib/cjs/aql-query';
-import { Document, DocumentData } from 'arangojs/lib/cjs/util/types';
+import { DocumentCollection, EdgeCollection } from "arangojs";
+import { GeneratedAqlQuery } from "arangojs/lib/cjs/aql-query";
+import { Document, DocumentData } from "arangojs/lib/cjs/util/types";
 
-import DB from 'repository/database';
-import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
+import DB from "repository/database";
+import { ArrayCursor } from "arangojs/lib/cjs/cursor";
 
 export default modelBuilder;
 
@@ -61,14 +61,8 @@ function modelBuilder<T extends object = any>(
     return { ...meta, ...body };
   }
 
-  async function edit(
-    id: string,
-    body: DocumentData<Partial<T>>,
-  ): Promise<Document<T>> {
-    const meta: Arango.InsertResults = await Collection.update(
-      { _key: id },
-      body,
-    );
+  async function edit(id: string, body: DocumentData<Partial<T>>): Promise<Document<T>> {
+    const meta: Arango.InsertResults = await Collection.update({ _key: id }, body);
 
     return { ...meta, ...body };
   }

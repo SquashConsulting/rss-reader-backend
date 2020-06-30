@@ -4,12 +4,12 @@
  * @packageDocumentation
  * @category Collection
  */
-import joi from 'joi';
+import joi from "joi";
 
-import DB from 'repository/database';
-import { DocumentCollection } from 'arangojs';
+import DB from "repository/database";
+import { DocumentCollection } from "arangojs";
 
-const name = 'categories';
+const name = "categories";
 const collection: DocumentCollection<Repo.Category> = DB.collection(name);
 
 /**

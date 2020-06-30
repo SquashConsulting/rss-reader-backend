@@ -4,11 +4,11 @@
  * @packageDocumentation
  * @category Controller
  */
-import { Request, Response } from 'express';
-import { Document } from 'arangojs/lib/cjs/util/types';
+import { Request, Response } from "express";
+import { Document } from "arangojs/lib/cjs/util/types";
 
-import Category from 'models/category';
-import ControllerDecorator from 'decorators/controller';
+import Category from "models/category";
+import ControllerDecorator from "decorators/controller";
 
 export default ControllerDecorator({ Create });
 
