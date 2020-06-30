@@ -7,15 +7,15 @@
  * @packageDocumentation
  * @category Model
  */
-import { aql } from 'arangojs';
+import { aql } from "arangojs";
 
-import { ArrayCursor } from 'arangojs/lib/cjs/cursor';
-import { Document } from 'arangojs/lib/cjs/util/types';
-import { GeneratedAqlQuery } from 'arangojs/lib/cjs/aql-query';
+import { ArrayCursor } from "arangojs/lib/cjs/cursor";
+import { Document } from "arangojs/lib/cjs/util/types";
+import { GeneratedAqlQuery } from "arangojs/lib/cjs/aql-query";
 
-import modelBuilder from './modelBuilder';
-import Feed from 'repository/collections/feed';
-import HasItems from 'repository/edges/hasItems';
+import modelBuilder from "./modelBuilder";
+import Feed from "repository/collections/feed";
+import HasItems from "repository/edges/hasItems";
 
 const defaultOperations = modelBuilder<Repo.Feed>(Feed.collection);
 export default { ...defaultOperations, view };

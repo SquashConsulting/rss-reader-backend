@@ -4,19 +4,19 @@
  * @packageDocumentation
  * @category Controller
  */
-import omit from 'lodash.omit';
-import { Request, Response } from 'express';
-import { Document } from 'arangojs/lib/cjs/util/types';
+import omit from "lodash.omit";
+import { Request, Response } from "express";
+import { Document } from "arangojs/lib/cjs/util/types";
 
-import Feed from 'models/feed';
-import Item from 'models/item';
+import Feed from "models/feed";
+import Item from "models/item";
 
-import Parser from 'services/parser';
-import Daemon from 'services/daemon';
+import Parser from "services/parser";
+import Daemon from "services/daemon";
 
-import Serializer from 'serializers';
+import Serializer from "serializers";
 
-import ControllerDecorator from 'decorators/controller';
+import ControllerDecorator from "decorators/controller";
 
 export default ControllerDecorator({ Get, Create, UpdateItems });
 
@@ -34,7 +34,7 @@ async function Get(req: Request, res: Response): Promise<void> {
   const feedView: Document<Repo.Feed> = await Feed.view(feedId, limit, offset);
 
   res.status(200).json(
-    Serializer.serialize('feeds', feedView, {
+    Serializer.serialize("feeds", feedView, {
       limit,
       offset,
       count: feedView.items.length,
@@ -55,7 +55,7 @@ async function Create(req: Request, res: Response): Promise<void> {
   {
     const feedExists = await Feed.findOne({ link: feed.link });
     if (feedExists) {
-      res.status(409).json({ error: 'Feed already exists' });
+      res.status(409).json({ error: "Feed already exists" });
       return;
     }
   }
@@ -63,7 +63,7 @@ async function Create(req: Request, res: Response): Promise<void> {
   const parsedFeed = await Parser.parseURL(feed.link);
 
   const items: Repo.Item[] = parsedFeed.items as Repo.Item[];
-  const feedBody: Repo.Feed = omit(parsedFeed, 'items') as Repo.Feed;
+  const feedBody: Repo.Feed = omit(parsedFeed, "items") as Repo.Feed;
   const lastItemGuid = items[0].guid;
 
   const savedFeed: Document<Repo.Feed> = await Feed.create({
@@ -74,7 +74,7 @@ async function Create(req: Request, res: Response): Promise<void> {
 
   await Item.create(items, savedFeed._id);
 
-  res.status(200).send(Serializer.serialize('feeds', savedFeed));
+  res.status(200).send(Serializer.serialize("feeds", savedFeed));
 
   Daemon.createJob(savedFeed);
 }
@@ -96,7 +96,7 @@ async function UpdateItems(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  res.status(200).json(Serializer.serialize('items', newItems));
+  res.status(200).json(Serializer.serialize("items", newItems));
 
   Promise.all([
     Feed.edit(feed._key, {

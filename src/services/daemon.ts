@@ -12,15 +12,15 @@
  * @category Service
  */
 
-import DB from 'repository/database';
-import { Document } from 'arangojs/lib/cjs/util/types';
+import DB from "repository/database";
+import { Document } from "arangojs/lib/cjs/util/types";
 
 const { FOXX_DAEMON_MOUNT: MOUNT, FOXX_DAEMON_SCRIPT: SCRIPT } = process.env;
 
 export default { getServiceMetadata, createJob };
 
 /**
- * @returns metadata about the `Daemon` Foxx Service. 
+ * @returns metadata about the `Daemon` Foxx Service.
  */
 async function getServiceMetadata(): Promise<Arango.Foxx.Metadata> {
   const service: Arango.Foxx.Metadata = await DB.getService(MOUNT);

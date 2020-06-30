@@ -2,11 +2,11 @@
  * @packageDocumentation
  * @internal
  */
-import DB from 'repository/database';
-import { EdgeCollection } from 'arangojs';
+import DB from "repository/database";
+import { EdgeCollection } from "arangojs";
 
 /* Constants */
-const name = 'has_feeds';
+const name = "has_feeds";
 const collection: EdgeCollection<Repo.HasFeeds> = DB.edgeCollection(name);
 
 /* Exports */

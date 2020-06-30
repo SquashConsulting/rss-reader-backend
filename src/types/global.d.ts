@@ -1,13 +1,9 @@
-import joi from 'joi';
-import { DocumentCollection, EdgeCollection } from 'arangojs';
-import { Request, Response, NextFunction } from 'express';
+import joi from "joi";
+import { DocumentCollection, EdgeCollection } from "arangojs";
+import { Request, Response, NextFunction } from "express";
 
 declare global {
-  type ControllerAction = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void> | void;
+  type ControllerAction = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
   interface ControllerModule {
     [key: string]: ControllerAction;
@@ -15,16 +11,10 @@ declare global {
 
   namespace Repo {
     type DateTimestamp = string;
-    type CollectionType = 'edge' | 'document';
+    type CollectionType = "edge" | "document";
     type Collection = EdgeCollection | DocumentCollection;
 
-    type IndexType =
-      | 'ttl'
-      | 'geo'
-      | 'hash'
-      | 'skiplist'
-      | 'fulltext'
-      | 'persistent';
+    type IndexType = "ttl" | "geo" | "hash" | "skiplist" | "fulltext" | "persistent";
 
     type IndexDefinition = {
       type: IndexType;
@@ -64,13 +54,7 @@ declare global {
 
   namespace Arango {
     namespace Foxx {
-      type ConfigurationType =
-        | 'json'
-        | 'string'
-        | 'number'
-        | 'boolean'
-        | 'integer'
-        | 'password';
+      type ConfigurationType = "json" | "string" | "number" | "boolean" | "integer" | "password";
 
       interface Configuration {
         default?: string;

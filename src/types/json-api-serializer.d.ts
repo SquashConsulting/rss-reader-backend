@@ -1,4 +1,4 @@
-declare module 'json-api-serializer' {
+declare module "json-api-serializer" {
   interface RelationshipOptions {
     type: string;
     alternativeKey?: string;
@@ -22,8 +22,8 @@ declare module 'json-api-serializer' {
     };
     blacklistOnDeserialize?: string[];
     whitelistOnDeserialize?: string[];
-    convertCase?: 'kebab-case' | 'snake_case' | 'camelCase';
-    unconvertCase?: 'kebab-case' | 'snake_case' | 'camelCase';
+    convertCase?: "kebab-case" | "snake_case" | "camelCase";
+    unconvertCase?: "kebab-case" | "snake_case" | "camelCase";
     convertCaseCacheSize?: number;
     beforeSerialize?: (data: object) => object;
     afterDeserialize?: (data: object) => object;
@@ -39,12 +39,7 @@ declare module 'json-api-serializer' {
   type ErrorWithStatus = Error;
 
   namespace JSONAPISerializer {
-    export {
-      RelationshipOptions,
-      Options,
-      ErrorWithStatus,
-      DynamicTypeOptions,
-    };
+    export { RelationshipOptions, Options, ErrorWithStatus, DynamicTypeOptions };
   }
 
   class JSONAPISerializer {
@@ -70,11 +65,7 @@ declare module 'json-api-serializer' {
       overrideSchemaOptions?: object,
     ): Promise<any>;
 
-    deserialize(
-      type: string | DynamicTypeOptions,
-      data: object,
-      schema?: string,
-    ): any;
+    deserialize(type: string | DynamicTypeOptions, data: object, schema?: string): any;
 
     deserializeAsync(
       type: string | DynamicTypeOptions,
@@ -83,13 +74,7 @@ declare module 'json-api-serializer' {
     ): Promise<any>;
 
     serializeError(
-      error:
-        | Error
-        | Error[]
-        | ErrorWithStatus
-        | ErrorWithStatus[]
-        | object
-        | object[],
+      error: Error | Error[] | ErrorWithStatus | ErrorWithStatus[] | object | object[],
     ): Promise<any>;
   }
 

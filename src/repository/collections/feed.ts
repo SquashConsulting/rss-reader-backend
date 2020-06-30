@@ -4,18 +4,18 @@
  * @packageDocumentation
  * @category Collection
  */
-import joi from 'joi';
+import joi from "joi";
 
-import DB from 'repository/database';
-import { DocumentCollection } from 'arangojs';
+import DB from "repository/database";
+import { DocumentCollection } from "arangojs";
 
-const name = 'feeds';
+const name = "feeds";
 const collection: DocumentCollection<Repo.Feed> = DB.collection(name);
 
 const index: Repo.IndexDefinition = {
-  type: 'hash',
+  type: "hash",
   unique: true,
-  fields: ['link'],
+  fields: ["link"],
 };
 
 /**
@@ -35,4 +35,3 @@ export default {
   schema,
   collection,
 } as Repo.CollectionExport;
-

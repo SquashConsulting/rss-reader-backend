@@ -4,10 +4,10 @@
  * @packageDocumentation
  * @category Middleware
  */
-import * as Express from 'express';
+import * as Express from "express";
 
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
+import morgan from "morgan";
+import bodyParser from "body-parser";
 
 export { initMiddlewares, handleRouterErrors };
 
@@ -17,7 +17,7 @@ export { initMiddlewares, handleRouterErrors };
 function initMiddlewares(server: Express.Express): Express.Express {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: false }));
-  server.use(morgan('combined'));
+  server.use(morgan("combined"));
 
   return server;
 }
@@ -27,16 +27,10 @@ function initMiddlewares(server: Express.Express): Express.Express {
  */
 function handleRouterErrors(server: Express.Express): Express.Express {
   server.use(
-    (
-      err: any,
-      _req: Express.Request,
-      res: Express.Response,
-      _next: Express.NextFunction,
-    ) => {
+    (err: any, _req: Express.Request, res: Express.Response, _next: Express.NextFunction) => {
       if (err.isBoom) return res.status(err.output.statusCode).json(err);
 
-      if (err.statusCode)
-        return res.status(err.statusCode).json({ error: err.message });
+      if (err.statusCode) return res.status(err.statusCode).json({ error: err.message });
 
       return res.status(500).json({ error: err.message });
     },

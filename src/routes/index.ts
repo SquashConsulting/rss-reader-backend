@@ -9,10 +9,10 @@
  * @category Router
  */
 
-import { Express } from 'express';
+import { Express } from "express";
 
-import FeedRouter from './feed';
-import CategoryRouter from './category';
+import FeedRouter from "./feed";
+import CategoryRouter from "./category";
 
 export default setupRoutes;
 
@@ -20,8 +20,8 @@ export default setupRoutes;
  * Initiates API Routes
  */
 function setupRoutes(server: Express): Express {
-  server.use('/feeds', FeedRouter);
-  server.use('/categories', CategoryRouter);
+  server.use("/feeds", FeedRouter);
+  server.use("/categories", CategoryRouter);
 
   return server;
 }

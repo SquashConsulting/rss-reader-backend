@@ -1,0 +1,16 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "prettier",
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+  },
+  "plugins": [
+    "prettier"
+  ]
+}
