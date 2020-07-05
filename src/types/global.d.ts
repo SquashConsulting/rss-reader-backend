@@ -1,6 +1,7 @@
 import joi from "joi";
-import { DocumentCollection, EdgeCollection } from "arangojs";
 import { Request, Response, NextFunction } from "express";
+import { DocumentCollection, EdgeCollection } from "arangojs";
+import { Document as ArangoDocument } from "arangojs/lib/cjs/util/types";
 
 declare global {
   type ControllerAction = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
@@ -12,6 +13,7 @@ declare global {
   namespace Repo {
     type DateTimestamp = string;
     type CollectionType = "edge" | "document";
+    type Document<T extends object> = ArangoDocument<T>;
     type Collection = EdgeCollection | DocumentCollection;
 
     type IndexType = "ttl" | "geo" | "hash" | "skiplist" | "fulltext" | "persistent";

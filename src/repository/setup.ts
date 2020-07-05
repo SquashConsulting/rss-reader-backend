@@ -1,5 +1,5 @@
 /**
- * This s a script file that can be called by running `npm run setup:repo`
+ * Set's up ArangoDB Repository with given collections.
  *
  * *NOTE: This file is not meant to be imported elsewhere in the project!*
  *

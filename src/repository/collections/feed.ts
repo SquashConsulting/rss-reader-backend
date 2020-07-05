@@ -15,7 +15,7 @@ const collection: DocumentCollection<Repo.Feed> = DB.collection(name);
 const index: Repo.IndexDefinition = {
   type: "hash",
   unique: true,
-  fields: ["link"],
+  fields: ["feedUrl"],
 };
 
 /**

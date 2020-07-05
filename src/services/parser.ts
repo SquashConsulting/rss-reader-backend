@@ -7,6 +7,10 @@
 import Parser from "rss-parser";
 import { Document } from "arangojs/lib/cjs/util/types";
 
+import * as Errors from "utils/errors";
+
+import type { IError } from "utils/errors";
+
 const PARSER = new Parser();
 
 export default { parseURL, getNewItems };
@@ -25,7 +29,7 @@ export default { parseURL, getNewItems };
  * ```
  */
 async function getNewItems(feed: Document<Repo.Feed>): Promise<Repo.Item[]> {
-  const parsedFeed = await parseURL(feed.link);
+  const parsedFeed = await parseURL(feed.feedUrl);
   const items: Repo.Item[] = getStandardizedItems(parsedFeed.items) as Repo.Item[];
 
   const currentLastItemGuid = items[0].guid;
@@ -63,21 +67,20 @@ async function parseURL(url: string): Promise<Parser.Output> {
 /**
  * @internal
  */
-function buildError(error: Error): Error & { statusCode?: number } {
+function buildError(error: Error): IError {
   // Standardizing possible error messages
   // Error messages taken from: https://github.com/rbren/rss-parser/blob/master/lib/parser.js
-  let newError: Error & { statusCode?: number } = new Error(error.message);
-
   if (error.message.startsWith("Status code")) {
     const [, statusCode] = error.message.split("Status code ");
-    newError.statusCode = parseInt(statusCode, 10);
-  } else if (error.message.startsWith("Request timed out")) {
-    newError.statusCode = 408;
-  } else {
-    newError.statusCode = 400;
+    const statusAsNumber = parseInt(statusCode, 10);
+    return new Errors.BaseError(error.message, statusAsNumber);
   }
 
-  return newError;
+  if (error.message.startsWith("Request timed out")) {
+    return new Errors.TimeoutError(error.message);
+  }
+
+  return new Errors.BadRequestError(error.message);
 }
 
 /**
