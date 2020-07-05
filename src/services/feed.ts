@@ -29,7 +29,7 @@ export default {
  * Daemon.createJob(feed);
  * ```
  */
-async function createFeed(feed: { title?: string; link: string }): Promise<Document<Repo.Feed>> {
+async function createFeed(feed: Repo.FeedParams): Promise<Document<Repo.Feed>> {
   const parsedFeed = await Parser.parseURL(feed.link);
   const feedUrl = parsedFeed.feedUrl || feed.link;
 

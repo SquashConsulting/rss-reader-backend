@@ -47,7 +47,7 @@ async function Get(req: Request, res: Response): Promise<void> {
  * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
  */
 async function Create(req: Request, res: Response): Promise<void> {
-  const feed = req.body.feed;
+  const feed: Repo.FeedParams = req.body.feed;
   const savedFeed = await FeedService.createFeed(feed);
 
   res.status(200).send(Serializer.serialize("feeds", savedFeed));

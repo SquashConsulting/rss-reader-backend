@@ -9,4 +9,9 @@ declare namespace Repo {
     /* Relationships */
     items?: Repo.Document<Repo.Item>[];
   }
+
+  interface FeedParams {
+    link: string;
+    title?: string;
+  }
 }
