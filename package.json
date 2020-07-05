@@ -5,16 +5,19 @@
   "main": "dist/entry.js",
   "private": true,
   "scripts": {
+    "preseed:repo": "npm run build",
     "presetup:repo": "npm run build",
     "preteardown:repo": "npm run build",
     "build": "tsc -p .",
     "start": "npm run build && node dist/entry.js",
     "live": "nodemon -e ts --exec \"npm run start\"",
-    "reset:repo": "npm run teardown:repo && npm run setup:repo",
+    "reset:repo": "npm run teardown:repo && npm run setup:repo && npm run seed:repo",
     "setup:repo": "node dist/repository/setup.js",
+    "seed:repo": "node dist/repository/seed.js",
     "teardown:repo": "node dist/repository/teardown.js",
     "postbuild": "ef-tspm > /dev/null",
     "generate:docs": "./node_modules/.bin/typedoc --stripInternal --out docs src --name \"RSS Reader Backend\" --includeVersion"
+
   },
   "bin": "./dist/entry.js",
   "devDependencies": {
