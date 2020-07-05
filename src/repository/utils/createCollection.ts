@@ -39,7 +39,7 @@ async function createCollection(
   const collectionExists = await collection.exists();
   if (collectionExists) return collection;
 
-  await collection.create({ isSystem });
+  await collection.create({ isSystem, keyOptions: { type: "autoincrement" } });
 
   return collection;
 }

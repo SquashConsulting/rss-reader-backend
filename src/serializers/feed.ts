@@ -7,6 +7,11 @@ import { Document } from "arangojs/lib/cjs/util/types";
 
 type ExtraData = { [key: string]: any };
 
+function lastItemId(data: Document<Repo.Feed>): string {
+  const lastItemKey = data.items[data.items.length - 1]?._key;
+  return lastItemKey ? `&lastItemId=${lastItemKey}` : "";
+}
+
 const SerializerOptions: Options = {
   id: "_key",
   blacklist: ["_id", "_rev"],
@@ -15,7 +20,7 @@ const SerializerOptions: Options = {
   },
   topLevelLinks: {
     next: (data: Document<Repo.Feed>, extraData: ExtraData) =>
-      extraData && `/feeds/${data._key}?limit=${extraData.limit}&offset=${extraData.count}`,
+      extraData && `/feeds/${data._key}?limit=${extraData.limit}${lastItemId(data)}`,
   },
   relationships: {
     items: {

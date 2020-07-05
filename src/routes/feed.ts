@@ -22,7 +22,7 @@ import FeedController from "controllers/feed";
  * * POST `/` - Adds a new RSS Feed
  *   * Body: {@link "repository/collections/feed".schema | Feed Schema}
  *
- * * PUT `/:id/parse` - Fetches Latest RSS Changes and Updates New Items
+ * * PUT/PATCH `/:id/parse` - Fetches Latest RSS Changes and Updates New Items
  *   * Params - {@link paramSchema | Param Schema}
  */
 const FeedRouter: Router = Router();
@@ -32,8 +32,8 @@ const paramSchema = {
 };
 
 const querySchema = {
-  limit: joi.number().optional().default(10),
-  offset: joi.number().optional().default(0),
+  lastItemId: joi.number().optional().default(0).min(1),
+  limit: joi.number().optional().default(10).min(1).max(50),
 };
 
 FeedRouter.get(
@@ -56,6 +56,14 @@ FeedRouter.post(
 );
 
 FeedRouter.put(
+  "/:id/parse",
+  validateRequest({
+    params: paramSchema,
+  }),
+  FeedController.UpdateItems,
+);
+
+FeedRouter.patch(
   "/:id/parse",
   validateRequest({
     params: paramSchema,

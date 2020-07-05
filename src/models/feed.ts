@@ -26,21 +26,25 @@ export default { ...defaultOperations, view };
  *
  * **Example:**
  * ```typescript
- * const feedView = await Feed.view(feedId, 20, 10);
+ * const feedView = await Feed.view(feedId, 10, 5);
  * res.json(Serializer.serialize('feeds', feedView));
  * ```
  */
 async function view(
   id: string,
   limit: number = 10,
-  offset: number = 0,
+  lastItemId: number = 0,
 ): Promise<Document<Repo.Feed>> {
+  const lastItemFilter = aql`
+    FILTER TO_NUMBER(item._key) > ${lastItemId}
+  `;
+
   const viewQuery: GeneratedAqlQuery = aql`
     LET feed = DOCUMENT(${Feed.collection}, ${id})
     LET items = (
       FOR item, has_items IN OUTBOUND feed ${HasItems.collection}
-        SORT has_items.createdAt DESC
-        LIMIT ${offset}, ${limit}
+        ${lastItemFilter}
+        LIMIT ${limit}
         RETURN item
       )
 

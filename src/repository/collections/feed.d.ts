@@ -1,12 +1,12 @@
 declare namespace Repo {
   interface Feed {
-    link: string;
     title: string;
+    feedUrl: string;
     language: string;
     description: string;
     lastItemGuid: string;
 
     /* Relationships */
-    items?: Repo.Item[];
+    items?: Repo.Document<Repo.Item>[];
   }
 }
