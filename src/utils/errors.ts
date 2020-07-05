@@ -1,3 +1,10 @@
+/**
+ * Error Types
+ *
+ * @packageDocumentation
+ * @category Utility
+ */
+
 export type IError =
   | ServerError
   | TimeoutError
