@@ -66,7 +66,7 @@ async function Create(req: Request, res: Response): Promise<void> {
   const feed: Repo.FeedParams = req.body.feed;
   const savedFeed = await FeedService.createFeed(feed);
 
-  res.status(200).send(Serializer.serialize("feeds", savedFeed));
+  res.status(200).send(Serializer.serialize("feeds", savedFeed, "meta-only"));
 
   Daemon.createJob(savedFeed);
 }

@@ -14,10 +14,6 @@ declare global {
     [key: string]: ControllerAction;
   }
 
-  interface ServiceModule {
-    [key: string]: Function;
-  }
-
   namespace Repo {
     type DateTimestamp = string;
     type CollectionType = "edge" | "document";
