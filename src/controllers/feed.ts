@@ -16,7 +16,19 @@ import Serializer from "serializers";
 
 import ControllerDecorator from "decorators/controller";
 
-export default ControllerDecorator({ Get, Create, UpdateItems });
+export default ControllerDecorator({ All, Get, Create, UpdateItems });
+
+/**
+ * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
+ * gets metadata about all `Feeds`.
+ *
+ * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
+ */
+async function All(_req: Request, res: Response): Promise<void> {
+  const feeds: Document<Repo.Feed>[] = await Feed.all();
+
+  res.status(200).json(Serializer.serialize("feeds", feeds, "meta-only"));
+}
 
 /**
  * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
@@ -29,7 +41,11 @@ async function Get(req: Request, res: Response): Promise<void> {
   const limit = parseInt(req.query.limit as string, 10);
   const lastItemId = parseInt(req.query.lastItemId as string, 10);
 
-  const feedView: Document<Repo.Feed> = await Feed.view(feedId, limit, lastItemId);
+  const feedView: Document<Repo.Feed> = await Feed.view(
+    feedId,
+    limit,
+    lastItemId,
+  );
 
   res.status(200).json(
     Serializer.serialize("feeds", feedView, {
@@ -50,7 +66,7 @@ async function Create(req: Request, res: Response): Promise<void> {
   const feed: Repo.FeedParams = req.body.feed;
   const savedFeed = await FeedService.createFeed(feed);
 
-  res.status(200).send(Serializer.serialize("feeds", savedFeed));
+  res.status(200).send(Serializer.serialize("feeds", savedFeed, "meta-only"));
 
   Daemon.createJob(savedFeed);
 }

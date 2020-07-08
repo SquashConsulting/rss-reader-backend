@@ -19,7 +19,6 @@
     "generate:docs": "./node_modules/.bin/typedoc --stripInternal --out docs src --name \"RSS Reader Backend\" --includeVersion"
 
   },
-  "bin": "./dist/entry.js",
   "devDependencies": {
     "@ef-carbon/tspm": "^2.2.5",
     "@types/body-parser": "^1.19.0",

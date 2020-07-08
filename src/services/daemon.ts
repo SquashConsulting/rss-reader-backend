@@ -13,11 +13,20 @@
  */
 
 import DB from "repository/database";
+import ServiceDecorator from "decorators/service";
+
 import { Document } from "arangojs/lib/cjs/util/types";
 
-const { FOXX_DAEMON_MOUNT: MOUNT, FOXX_DAEMON_SCRIPT: SCRIPT } = process.env;
+const {
+  FOXX_DAEMON_ENABLED,
+  FOXX_DAEMON_MOUNT: MOUNT,
+  FOXX_DAEMON_SCRIPT: SCRIPT,
+} = process.env;
 
-export default { getServiceMetadata, createJob };
+export default ServiceDecorator(FOXX_DAEMON_ENABLED, {
+  getServiceMetadata,
+  createJob,
+});
 
 /**
  * @returns metadata about the `Daemon` Foxx Service.

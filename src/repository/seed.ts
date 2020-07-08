@@ -15,7 +15,10 @@ import FeedService from "services/feed";
 
 const feeds = [
   { title: "Rasjonell Tech", link: "https://rasjonell.tech/rss.xml" },
-  { title: "Rasjonell's NewsBlur", link: "https://rasjonell.newsblur.com/feed" },
+  {
+    title: "Rasjonell's NewsBlur",
+    link: "https://rasjonell.newsblur.com/feed",
+  },
 ];
 
 console.log("Creating Feeds...");

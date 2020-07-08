@@ -36,6 +36,8 @@ const querySchema = {
   limit: joi.number().optional().default(10).min(1).max(50),
 };
 
+FeedRouter.get("/", FeedController.All);
+
 FeedRouter.get(
   "/:id",
   validateRequest({

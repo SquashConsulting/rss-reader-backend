@@ -12,8 +12,6 @@ import Item from "models/item";
 
 import Parser from "services/parser";
 
-import { ConflictError } from "utils/errors";
-
 export default {
   createFeed,
   updateItems,
@@ -34,16 +32,18 @@ async function createFeed(feed: Repo.FeedParams): Promise<Document<Repo.Feed>> {
   const feedUrl = parsedFeed.feedUrl || feed.link;
 
   {
-    const feedExists = await Feed.findOne({ feedUrl });
-    if (feedExists) {
-      throw new ConflictError("Feed already exists");
+    const existingFeed: Document<Repo.Feed> = await Feed.findOne({ feedUrl });
+    if (existingFeed) {
+      return existingFeed;
     }
   }
 
   const items: Repo.Item[] = parsedFeed.items as Repo.Item[];
 
   const _feedBody: Repo.Feed = omit(parsedFeed, "items") as Repo.Feed;
-  const feedBody: Repo.Feed = feed.title ? { ..._feedBody, title: feed.title } : _feedBody;
+  const feedBody: Repo.Feed = feed.title
+    ? { ..._feedBody, title: feed.title }
+    : _feedBody;
 
   const lastItemGuid = items[0].guid;
 

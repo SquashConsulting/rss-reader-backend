@@ -4,7 +4,11 @@ import { DocumentCollection, EdgeCollection } from "arangojs";
 import { Document as ArangoDocument } from "arangojs/lib/cjs/util/types";
 
 declare global {
-  type ControllerAction = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
+  type ControllerAction = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void> | void;
 
   interface ControllerModule {
     [key: string]: ControllerAction;
@@ -16,7 +20,13 @@ declare global {
     type Document<T extends object> = ArangoDocument<T>;
     type Collection = EdgeCollection | DocumentCollection;
 
-    type IndexType = "ttl" | "geo" | "hash" | "skiplist" | "fulltext" | "persistent";
+    type IndexType =
+      | "ttl"
+      | "geo"
+      | "hash"
+      | "skiplist"
+      | "fulltext"
+      | "persistent";
 
     type IndexDefinition = {
       type: IndexType;
@@ -56,7 +66,13 @@ declare global {
 
   namespace Arango {
     namespace Foxx {
-      type ConfigurationType = "json" | "string" | "number" | "boolean" | "integer" | "password";
+      type ConfigurationType =
+        | "json"
+        | "string"
+        | "number"
+        | "boolean"
+        | "integer"
+        | "password";
 
       interface Configuration {
         default?: string;
