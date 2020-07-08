@@ -67,8 +67,14 @@ function modelBuilder<T extends object = any>(
     return { ...meta, ...body };
   }
 
-  async function edit(id: string, body: DocumentData<Partial<T>>): Promise<Document<T>> {
-    const meta: Arango.InsertResults = await Collection.update({ _key: id }, body);
+  async function edit(
+    id: string,
+    body: DocumentData<Partial<T>>,
+  ): Promise<Document<T>> {
+    const meta: Arango.InsertResults = await Collection.update(
+      { _key: id },
+      body,
+    );
 
     return { ...meta, ...body };
   }

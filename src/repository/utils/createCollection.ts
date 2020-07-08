@@ -34,7 +34,8 @@ async function createCollection(
   type: Repo.CollectionType,
   isSystem: boolean = false,
 ): Promise<Repo.Collection> {
-  const collection = type === "edge" ? DB.edgeCollection(name) : DB.collection(name);
+  const collection =
+    type === "edge" ? DB.edgeCollection(name) : DB.collection(name);
 
   const collectionExists = await collection.exists();
   if (collectionExists) return collection;

@@ -39,7 +39,12 @@ declare module "json-api-serializer" {
   type ErrorWithStatus = Error;
 
   namespace JSONAPISerializer {
-    export { RelationshipOptions, Options, ErrorWithStatus, DynamicTypeOptions };
+    export {
+      RelationshipOptions,
+      Options,
+      ErrorWithStatus,
+      DynamicTypeOptions,
+    };
   }
 
   class JSONAPISerializer {
@@ -65,7 +70,11 @@ declare module "json-api-serializer" {
       overrideSchemaOptions?: object,
     ): Promise<any>;
 
-    deserialize(type: string | DynamicTypeOptions, data: object, schema?: string): any;
+    deserialize(
+      type: string | DynamicTypeOptions,
+      data: object,
+      schema?: string,
+    ): any;
 
     deserializeAsync(
       type: string | DynamicTypeOptions,
@@ -74,7 +83,13 @@ declare module "json-api-serializer" {
     ): Promise<any>;
 
     serializeError(
-      error: Error | Error[] | ErrorWithStatus | ErrorWithStatus[] | object | object[],
+      error:
+        | Error
+        | Error[]
+        | ErrorWithStatus
+        | ErrorWithStatus[]
+        | object
+        | object[],
     ): Promise<any>;
   }
 

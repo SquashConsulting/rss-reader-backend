@@ -8,7 +8,11 @@ declare module "express-joi-validator" {
     params?: SchemaLike;
   }
 
-  type JoiValidator = (req: Request, res: Response, next: NextFunction) => ValidationResult<Schema>;
+  type JoiValidator = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => ValidationResult<Schema>;
 
   function Validator(schema: Schema, options?: ValidationOptions): JoiValidator;
 

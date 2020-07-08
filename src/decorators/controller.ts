@@ -9,7 +9,9 @@
  * Given a `ControllerModule`, this function turns all the
  * controller actions into decorated methods.
  */
-export default function decorateControllerModule(controller: ControllerModule): ControllerModule {
+export default function decorateControllerModule(
+  controller: ControllerModule,
+): ControllerModule {
   for (const key in controller) {
     controller[key] = withErrorHandler(controller[key]);
   }

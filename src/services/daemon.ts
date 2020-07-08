@@ -17,7 +17,11 @@ import ServiceDecorator from "decorators/config";
 
 import { Document } from "arangojs/lib/cjs/util/types";
 
-const { FOXX_DAEMON_ENABLED, FOXX_DAEMON_MOUNT: MOUNT, FOXX_DAEMON_SCRIPT: SCRIPT } = process.env;
+const {
+  FOXX_DAEMON_ENABLED,
+  FOXX_DAEMON_MOUNT: MOUNT,
+  FOXX_DAEMON_SCRIPT: SCRIPT,
+} = process.env;
 
 export default ServiceDecorator(FOXX_DAEMON_ENABLED, {
   getServiceMetadata,

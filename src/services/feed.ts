@@ -43,7 +43,9 @@ async function createFeed(feed: Repo.FeedParams): Promise<Document<Repo.Feed>> {
   const items: Repo.Item[] = parsedFeed.items as Repo.Item[];
 
   const _feedBody: Repo.Feed = omit(parsedFeed, "items") as Repo.Feed;
-  const feedBody: Repo.Feed = feed.title ? { ..._feedBody, title: feed.title } : _feedBody;
+  const feedBody: Repo.Feed = feed.title
+    ? { ..._feedBody, title: feed.title }
+    : _feedBody;
 
   const lastItemGuid = items[0].guid;
 

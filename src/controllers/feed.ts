@@ -41,7 +41,11 @@ async function Get(req: Request, res: Response): Promise<void> {
   const limit = parseInt(req.query.limit as string, 10);
   const lastItemId = parseInt(req.query.lastItemId as string, 10);
 
-  const feedView: Document<Repo.Feed> = await Feed.view(feedId, limit, lastItemId);
+  const feedView: Document<Repo.Feed> = await Feed.view(
+    feedId,
+    limit,
+    lastItemId,
+  );
 
   res.status(200).json(
     Serializer.serialize("feeds", feedView, {

@@ -9,7 +9,10 @@
  * Given a `ServiceModule`, this function turns all the
  * service actions into environemnt-configurable methods.
  */
-export default function decorateServiceModule(ENV: string, Service: ServiceModule): ServiceModule {
+export default function decorateServiceModule(
+  ENV: string,
+  Service: ServiceModule,
+): ServiceModule {
   const condition = ENV === "true";
 
   for (const key in Service) {
@@ -17,7 +20,12 @@ export default function decorateServiceModule(ENV: string, Service: ServiceModul
       if (condition) {
         return Service[key].apply(this, arguments);
       } else {
-        console.warn("Trying to call a disabled Service action:", Service.name, "::", key);
+        console.warn(
+          "Trying to call a disabled Service action:",
+          Service.name,
+          "::",
+          key,
+        );
       }
     };
   }

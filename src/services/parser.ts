@@ -30,7 +30,9 @@ export default { parseURL, getNewItems };
  */
 async function getNewItems(feed: Document<Repo.Feed>): Promise<Repo.Item[]> {
   const parsedFeed = await parseURL(feed.feedUrl);
-  const items: Repo.Item[] = getStandardizedItems(parsedFeed.items) as Repo.Item[];
+  const items: Repo.Item[] = getStandardizedItems(
+    parsedFeed.items,
+  ) as Repo.Item[];
 
   const currentLastItemGuid = items[0].guid;
   if (feed.lastItemGuid === currentLastItemGuid) return null;

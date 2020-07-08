@@ -21,7 +21,8 @@ const SerializerOptions: Options = {
   },
   topLevelLinks: {
     next: (data: Document<Repo.Feed>, extraData: ExtraData) =>
-      extraData && `/feeds/${data._key}?limit=${extraData.limit}${lastItemId(data)}`,
+      extraData &&
+      `/feeds/${data._key}?limit=${extraData.limit}${lastItemId(data)}`,
   },
   relationships: {
     items: {
