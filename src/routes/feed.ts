@@ -37,6 +37,15 @@ const querySchema = {
 };
 
 FeedRouter.get(
+  "/",
+  validateRequest({
+    query: querySchema,
+    params: paramSchema,
+  }),
+  FeedController.All,
+);
+
+FeedRouter.get(
   "/:id",
   validateRequest({
     query: querySchema,
