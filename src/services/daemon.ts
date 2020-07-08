@@ -13,7 +13,7 @@
  */
 
 import DB from "repository/database";
-import ServiceDecorator from "decorators/config";
+import ServiceDecorator from "decorators/service";
 
 import { Document } from "arangojs/lib/cjs/util/types";
 
