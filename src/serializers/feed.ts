@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @category Serializer
  */
+import omit from "lodash.omit";
 import { Options } from "json-api-serializer";
 import { Document } from "arangojs/lib/cjs/util/types";
 
@@ -28,5 +29,11 @@ const SerializerOptions: Options = {
     },
   },
 };
+
+export const MetadataSerializerOptions: Options = omit(SerializerOptions, [
+  "topLevelLinks",
+  "topLevelMeta",
+  "relationships",
+]);
 
 export default SerializerOptions;

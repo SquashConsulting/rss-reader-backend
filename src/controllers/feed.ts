@@ -16,7 +16,19 @@ import Serializer from "serializers";
 
 import ControllerDecorator from "decorators/controller";
 
-export default ControllerDecorator({ Get, Create, UpdateItems });
+export default ControllerDecorator({ All, Get, Create, UpdateItems });
+
+/**
+ * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},
+ * gets metadata about all `Feeds`.
+ *
+ * @response {@linkcode "serializers/feed".SerializerOptions | FeedSerializer}
+ */
+async function All(_req: Request, res: Response): Promise<void> {
+  const feeds: Document<Repo.Feed>[] = await Feed.all();
+
+  res.status(200).json(Serializer.serialize("feeds", feeds, "meta-only"));
+}
 
 /**
  * Given a Request defined by {@link "routes/feed".FeedRouter | FeedRouter},

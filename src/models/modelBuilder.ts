@@ -28,6 +28,7 @@ function modelBuilder<T extends object = any>(
   Collection: DocumentCollection<T> | EdgeCollection<T>,
 ) {
   return {
+    all,
     get,
     find,
     findOne,
@@ -36,6 +37,11 @@ function modelBuilder<T extends object = any>(
     remove,
     executeAQL,
   };
+
+  async function all(): Promise<Document<T>[]> {
+    const cursor = await Collection.all();
+    return cursor.all();
+  }
 
   function get(id: string): Promise<Document<T>> {
     return Collection.document({ _key: id });
